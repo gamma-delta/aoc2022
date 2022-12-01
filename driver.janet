@@ -1,3 +1,5 @@
+#!/bin/env janet
+
 (defn run-day [day &opt verbose]
   (default verbose false)
   (def padded-day (string/format "%.02d" day))
