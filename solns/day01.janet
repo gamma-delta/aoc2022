@@ -1,11 +1,8 @@
-(defmacro delim [main sep]
-  ~'(*
-      ,main
-      (any (* ,sep ,main))))
+(import /util :prefix "")
 
 (def peg ~{:num (/ ':d+ ,scan-number)
-           :elf (group ,(delim :num "\n"))
-           :main ,(delim :elf "\n\n")})
+           :elf (group ,(split :num "\n"))
+           :main ,(split :elf "\n\n")})
 
 (defn part1 [input]
   (def elves (peg/match peg input))
@@ -15,5 +12,5 @@
   (def elves (peg/match peg input))
   (sum (take 3 (sort (map sum elves) >))))
 
-# (pp (peg/match (delim ':d+ ",") "1,23,45,678,"))
+# (pp (peg/match (split ':d+ ",") "1,23,45,678,"))
 
