@@ -1,6 +1,6 @@
 (def peg ~{:num (/ ':d+ ,scan-number)
-           :elf (group (any (* :num "\n")))
-           :main (* (any (* :elf "\n")) :elf)})
+           :elf (group (any (* :num (? "\n"))))
+           :main (* (any (* :elf (? "\n"))))})
 
 (defn part1 [input]
   (def elves (peg/match peg input))
