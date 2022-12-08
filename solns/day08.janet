@@ -27,6 +27,9 @@
            ~{:tree (drop (replace
                            (* ':d (argument 0) (column) (line))
                            # not sure why we have to subtract *two* from the column here
+                           # post-petra here: it's cause we scan the ':d first, so the cursor's gone to the right one
+                           # that is bad and i shouldn't have done that
+                           # i'm kinda amazed it works vis a vis newlines
                            ,(fn [digit map col line] (put map [(- col 2) (- line 1)] (scan-number digit)))))
              :trees ,(split (any :tree) "\n")
              :main (* :trees (argument 0))}))
