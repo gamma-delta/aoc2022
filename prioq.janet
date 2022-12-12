@@ -36,6 +36,14 @@
     (errorf "tried to get! from an empty prioq")
     (array/pop arr)))
 
+(def- std/empty? empty?)
+(defn empty? [q]
+  (std/empty? (q :arr)))
+
+(def- std/length length)
+(defn length [q]
+  (std/length (q :arr)))
+
 (defn- main [& args]
   # property based testing babey
   (def q (new
