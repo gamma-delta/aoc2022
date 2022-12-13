@@ -91,6 +91,7 @@
 
   # (loop [pos :in (reverse path)]
   #   (printf "(%3d, %3d) %d" (pos 0) (pos 1) (map pos)))
+  # (pp start)
   (length path))
 
 # 500 too high
@@ -131,7 +132,6 @@
               (put cost-so-far npos new-cost)
               (prioq/add! frontier [npos new-cost])
               (put came-from npos current)))))))
-
   [zeroes came-from])
 
 (defn part2 [input]
@@ -139,14 +139,19 @@
   (def [zeroes lookup] (djikstra map end))
   # (printf "%P\n%P" zeroes lookup)
 
-  (reduce (fn [known-min zeropos]
-            (var cursor zeropos)
-            (var count 0)
-            (while (not= cursor end)
-              (++ count)
-              (set cursor (lookup cursor)))
-            (min count known-min))
-          math/inf (keys zeroes)))
+  (def [min-dist target]
+    (reduce (fn [[known-min known-target] zeropos]
+              (var cursor zeropos)
+              (var count 0)
+              (while (not= cursor end)
+                (++ count)
+                (set cursor (lookup cursor)))
+              (if (< count known-min)
+                [count zeropos]
+                [known-min known-target]))
+            [math/inf nil] (keys zeroes)))
+  # (pp target)
+  min-dist)
 
 (defn main [& args]
   (pp (part2 ```Sabqponm
